@@ -7,10 +7,10 @@ import sys
 
 
 
-api_key = "f3JzpJaqDY8CLWgVbEjFFoIbC"
-api_key_secret = "KtagoMuv154dBkhW8jESVwx4H17oOmSBrlDprM238jfg3tjqHS"
-access_token = "1554109608259686400-7aMEcj0twjLJsrcTLor4VNmZLvHS8d"
-access_token_secret = "6Nkh0qJX8tXCizixQAszosPXXSFznuTvcmVgz1GqrhNhb"
+api_key = "your_key"
+api_key_secret = "your_key"
+access_token = "your_key"
+access_token_secret = "your_key"
 
 authenticator = tweepy.OAuthHandler(api_key, api_key_secret)
 authenticator.set_access_token( access_token, access_token_secret)
