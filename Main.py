@@ -123,26 +123,47 @@ def main():
         
         # When the plane is flying check if it already landed or is still flying.
         elif response == 0 and status_plane == plane_states[1]:
-            Plane_instance.change_status(plane_states[0])
-            logging.info(f"Changed plane states to: {Plane_instance.get_status}")
-            Time_sleep_changer(Original_time_per_cycle)
-            logging.info(f"Time has been changed to original time per cycle: {Time_cycle}")
-
             try:
-                nearest_airport = Plane_instance.get_nrst_airport()
-                log = flight_log(nearest_airport[1][0], CALLSIGN, "landen",nearest_airport[1][3], nearest_airport[1][4])
-                logging.info(f"Plane log has been updated. succesfully using the following data. Airport: {nearest_airport[1][0]} Callsign: {CALLSIGN} Lon coordinates: {nearest_airport[1][3]} Lat coordinates: {nearest_airport[1][4]}")
-                logging.info(f"Coordinates of plane are: {Plane_instance.get_lat()},{Plane_instance.get_lon()}")
-                logging.info(f"Nearest airport found: {nearest_airport}")
-                post_result = create_tweet(CALLSIGN, nearest_airport[1][0], ISO_country_to_continent(nearest_airport[1][2], nearest_airport[1][0]), plane_actions[1], nearest_airport[1][3], nearest_airport[1][4], get_latest_flight_time(CALLSIGN), get_latest_flight_distance(CALLSIGN), get_latest_flight_costs(CALLSIGN))
-                logging.warning(f"Tweet placed with following info:  {post_result}")
+                altitude = Plane_instance.get_altitude()
+                logging.info(f"Altitude collected succesfully {altitude}")
+            except Exception as e:
+                logging.critical("Exception occured: ", exc_info=True)
+                continue
+
+            if altitude == 'ground':
+
+                Plane_instance.change_status(plane_states[0])
+                logging.info(f"Changed plane states to: {Plane_instance.get_status}")
+                Time_sleep_changer(Original_time_per_cycle)
+                logging.info(f"Time has been changed to original time per cycle: {Time_cycle}")
+
+                try:
+                    nearest_airport = Plane_instance.get_nrst_airport()
+                    log = flight_log(nearest_airport[1][0], CALLSIGN, "landen",nearest_airport[1][3], nearest_airport[1][4])
+                    logging.info(f"Plane log has been updated. succesfully using the following data. Airport: {nearest_airport[1][0]} Callsign: {CALLSIGN} Lon coordinates: {nearest_airport[1][3]} Lat coordinates: {nearest_airport[1][4]}")
+                    logging.info(f"Coordinates of plane are: {Plane_instance.get_lat()},{Plane_instance.get_lon()}")
+                    logging.info(f"Nearest airport found: {nearest_airport}")
+                    post_result = create_tweet(CALLSIGN, nearest_airport[1][0], ISO_country_to_continent(nearest_airport[1][2], nearest_airport[1][0]), plane_actions[1], nearest_airport[1][3], nearest_airport[1][4], get_latest_flight_time(CALLSIGN), get_latest_flight_distance(CALLSIGN), get_latest_flight_costs(CALLSIGN))
+                    logging.warning(f"Tweet placed with following info:  {post_result}")
 
 
 
             
-            except Exception as e:
-                logging.critical("Exception occured: ", exc_info=True)
-                continue
+                except Exception as e:
+                    logging.critical("Exception occured: ", exc_info=True)
+                    continue
+            
+            else:
+                logging.warning(f"There is probavly a signal breakout so it will wait till altitude is ground to change status to ground")
+                
+
+            
+
+        
+        else:
+            logging.warning(f"Response does not satisy any of the conditionals")
+
+
         
         else:
             logging.warning(f"Response does not satisy any of the conditionals")
