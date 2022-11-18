@@ -95,6 +95,9 @@ class plane(OrderedDict):
 	def get_ground_speed(self):
 		return self.get_response()['gs']
 	
+	def get_altitude(self):
+		return self.get_response()['alt_baro']
+	
 	def get_status(self):
 	    return self.flightstatus
 	
