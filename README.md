@@ -1,5 +1,9 @@
-# planetracker
+# Planetracker 
 The reason for this project is to simplify the plane jet of Jack Sweeney. The code, written in Python, is under 400 lines long. Next to this it uses an easily available API so you can setup a similar project in no time. The aim for this project was to familiarize myself with calling API's, JSON, iterating over writing and sorting CSV files, working with a virtual machine and working in Google cloud.Next steps in the project to add a picture with the custom flight path of the plane. To add a function in which users can text to this twitter account and request a log of this plane.
+
+# How the program works
+
+This plane bot uses the RAPID API of ADSB to send a tweet out whenever a plane with a certain callsign takes off or lands. Initial purpose whas to track the King and government of the Netherlands across their flights. Next to this it shows the flight and distance of the plane when it has landed.Every time the bot is run it creates two files: A log file and a CSV file. The aim of the log file is to log every event in the program and show any exceptions or errors which can be used for debugging. The plane CSV file stores where the plane has landed, at what time and what the time was the plane took to go from one place to another and the distance. From the CSV handlers the only thing you need is the:<[small_medium_big_airports.csv(https://github.com/Maxbladt/planetracker/blob/main/CSV_handlers/small_medium_big_airports.csv)>. The rest of the programs are used to change from all airports to the airports of interest.To start this bot on your own the only two things you need are a Twitter development account and the rapid API of ADSB ($10.00 per month).
 
 If you happen to have some improvements then please contribute to this project.
 ## Example takeoff Tweet
